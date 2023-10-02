@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmg4n8ts1wma3"]
+
+[ext_resource type="Texture2D" uid="uid://burgyq2gxnhb6" path="res://art/enemies/Rock.png" id="1_4qiq0"]
+[ext_resource type="Script" path="res://mob.gd" id="1_tqryd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l0amt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4qiq0")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qj03t"]
+radius = 24.0208
+
+[node name="RigidBody2D" type="RigidBody2D"]
+position = Vector2(91, 82)
+collision_mask = 0
+script = ExtResource("1_tqryd")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = SubResource("SpriteFrames_l0amt")
+animation = &"roll"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qj03t")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

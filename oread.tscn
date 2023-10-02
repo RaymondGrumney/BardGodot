@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds8af0exe13s2"]
+
+[ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_4k7c8"]
+[ext_resource type="Texture2D" uid="uid://dx411xgi1onub" path="res://art/items/Oread.png" id="2_gtxgh"]
+[ext_resource type="Script" path="res://hover.gd" id="3_1oxcy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0m6dv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gtxgh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Oread" type="Node2D"]
+
+[node name="Item" parent="." instance=ExtResource("1_4k7c8")]
+key_to_update = "oreads"
+
+[node name="RigidBody2D" parent="Item" index="2"]
+collision_layer = 0
+collision_mask = 0
+contact_monitor = true
+freeze = true
+
+[node name="CollisionShape2D" parent="Item/RigidBody2D" index="0"]
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item"]
+position = Vector2(-1, 2)
+sprite_frames = SubResource("SpriteFrames_0m6dv")
+
+[node name="Hover" type="Node" parent="." node_paths=PackedStringArray("Sprite")]
+script = ExtResource("3_1oxcy")
+Sprite = NodePath("../Item/AnimatedSprite2D")
+
+[editable path="Item"]

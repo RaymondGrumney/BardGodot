@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccvom53kp48i1"]
+
+[ext_resource type="Texture2D" uid="uid://cmeliff6i46lk" path="res://art/level/ChestLargeBrokenLock.png" id="1_2otry"]
+[ext_resource type="PackedScene" uid="uid://blkqyi7llpil6" path="res://scenes/impart_impact_on_ready.tscn" id="2_6kf1e"]
+[ext_resource type="PackedScene" uid="uid://cfifh6p5rq7mj" path="res://scenes/despawn_on_timer.tscn" id="3_8imym"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m5mfy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2otry")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ChestLockLarge" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D"]
+sprite_frames = SubResource("SpriteFrames_m5mfy")
+
+[node name="ImpartImpactOnReady" parent="RigidBody2D" instance=ExtResource("2_6kf1e")]
+initial_impact = Vector2(200, -200)
+initial_impact_variance = Vector2(0, 0)
+away_from_player = true
+
+[node name="DespawnOnTimer" parent="." instance=ExtResource("3_8imym")]

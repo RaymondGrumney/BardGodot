@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhberoslmnmv0"]
+
+[ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_lc83j"]
+[ext_resource type="Texture2D" uid="uid://cvnq4hqd0apj1" path="res://art/items/CoinBronze.png" id="2_kky2h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lra84"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kky2h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Coin" type="Node2D"]
+
+[node name="Item" parent="." instance=ExtResource("1_lc83j")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item/RigidBody2D" index="0"]
+sprite_frames = SubResource("SpriteFrames_lra84")
+
+[editable path="Item"]

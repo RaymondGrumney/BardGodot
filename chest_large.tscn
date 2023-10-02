@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://byr1xmvlsitxq"]
+
+[ext_resource type="Script" path="res://spawn_on_damage.gd" id="1_j38st"]
+[ext_resource type="PackedScene" uid="uid://ccvom53kp48i1" path="res://chest_lock_large.tscn" id="2_i44gb"]
+[ext_resource type="Texture2D" uid="uid://c0pganjlwrn17" path="res://art/level/ChestLargeBase.png" id="3_68njx"]
+[ext_resource type="Script" path="res://takes_damage.gd" id="4_6ukql"]
+[ext_resource type="Texture2D" uid="uid://cy6hjmlhy4whw" path="res://art/level/ChestLargeLid.png" id="4_uocp4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xspf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_68njx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_by5ij"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_uocp4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rg1lk"]
+size = Vector2(38, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkc7q"]
+size = Vector2(38, 13)
+
+[node name="ChestLarge" type="Node2D" node_paths=PackedStringArray("object_to_destroy", "spawn_area")]
+script = ExtResource("1_j38st")
+object_to_destroy = NodePath("ChestLargeLid")
+spawn_obect_on_destruction = Array[Dictionary]([{
+ExtResource("2_i44gb"): 1
+}])
+spawn_area = NodePath("ChestLargeLid/SpawnArea")
+
+[node name="ChestLargeBase" type="Area2D" parent="."]
+position = Vector2(0, -13)
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ChestLargeBase"]
+sprite_frames = SubResource("SpriteFrames_7xspf")
+offset = Vector2(0, 0.5)
+
+[node name="ChestLargeLid" type="Area2D" parent="." groups=["takes_player_damage"]]
+position = Vector2(0, -12)
+collision_layer = 8
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ChestLargeLid"]
+position = Vector2(0, -17)
+sprite_frames = SubResource("SpriteFrames_by5ij")
+offset = Vector2(0, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChestLargeLid"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_rg1lk")
+
+[node name="TakesDamage" type="Node" parent="ChestLargeLid"]
+script = ExtResource("4_6ukql")
+
+[node name="SpawnArea" type="CollisionShape2D" parent="ChestLargeLid"]
+position = Vector2(0, -19.5)
+shape = SubResource("RectangleShape2D_gkc7q")
+disabled = true
+
+[connection signal="area_entered" from="ChestLargeLid" to="." method="_on_area_entered"]
+[connection signal="body_entered" from="ChestLargeLid" to="." method="_on_body_entered"]

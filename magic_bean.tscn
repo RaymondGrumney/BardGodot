@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dx72uk0k8uwts"]
+
+[ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_6jq4x"]
+[ext_resource type="Texture2D" uid="uid://c0f4vs0tgh457" path="res://art/items/MagicBean.png" id="2_0coc2"]
+[ext_resource type="PackedScene" uid="uid://bnwixmoyiripp" path="res://spell_magic_bean.tscn" id="2_raceq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_20w26"]
+friction = 0.1
+bounce = 0.3
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_78iy8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0coc2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Magic Bean" type="Node2D"]
+
+[node name="Item" parent="." instance=ExtResource("1_6jq4x")]
+
+[node name="Collectible" parent="Item" index="0"]
+collectible = ExtResource("2_raceq")
+
+[node name="RigidBody2D" parent="Item" index="3"]
+physics_material_override = SubResource("PhysicsMaterial_20w26")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item/RigidBody2D" index="1"]
+sprite_frames = SubResource("SpriteFrames_78iy8")
+
+[editable path="Item"]

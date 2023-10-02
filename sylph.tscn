@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6d88ky1f2t3b"]
+
+[ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_vdpg8"]
+[ext_resource type="Texture2D" uid="uid://bbu13h00p7l0u" path="res://art/items/Sylph.png" id="2_ud3k1"]
+[ext_resource type="Script" path="res://hover.gd" id="4_jote1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0m6dv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ud3k1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Sylph" type="Node2D"]
+
+[node name="Item" parent="." instance=ExtResource("1_vdpg8")]
+key_to_update = "sylphs"
+
+[node name="Area2D" parent="Item" index="2"]
+position = Vector2(13, 0)
+
+[node name="CollisionShape2D" parent="Item/Area2D" index="0"]
+position = Vector2(-13.5, 7.5)
+
+[node name="RigidBody2D" parent="Item" index="3"]
+collision_layer = 0
+collision_mask = 0
+max_contacts_reported = 1
+contact_monitor = true
+freeze = true
+
+[node name="CollisionShape2D" parent="Item/RigidBody2D" index="0"]
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item"]
+position = Vector2(13, 1)
+sprite_frames = SubResource("SpriteFrames_0m6dv")
+
+[node name="Hover" type="Node" parent="." node_paths=PackedStringArray("Sprite")]
+script = ExtResource("4_jote1")
+Sprite = NodePath("../Item/AnimatedSprite2D")
+
+[connection signal="timeout" from="Item/Timer" to="Item" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Item/Area2D" to="Item" method="_on_body_entered"]
+[connection signal="body_entered" from="Item/Area2D" to="Item/Collectible" method="_collected"]
+[connection signal="body_entered" from="Item/RigidBody2D" to="Item" method="_on_body_entered"]
+[connection signal="body_entered" from="Item/RigidBody2D" to="Item/Collectible" method="_collected"]
+
+[editable path="Item"]

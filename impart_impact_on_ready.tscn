@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://blkqyi7llpil6"]
+
+[ext_resource type="Script" path="res://impart_impact_on_ready.gd" id="1_32jij"]
+
+[node name="ImpartImpactOnReady" type="Node2D"]
+script = ExtResource("1_32jij")

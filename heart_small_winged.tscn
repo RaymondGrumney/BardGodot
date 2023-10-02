@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://djcjlx516m8h7"]
+
+[ext_resource type="Script" path="res://start_default_anim_on_ready.gd" id="1_tmi25"]
+[ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_vmfga"]
+[ext_resource type="Texture2D" uid="uid://dj7gmhe47ev4d" path="res://art/items/HeartWing1.png" id="2_p2od0"]
+[ext_resource type="Texture2D" uid="uid://bh1fc2grbu57u" path="res://art/items/HeartWing2.png" id="3_gveho"]
+[ext_resource type="Texture2D" uid="uid://bf5djwjagv7aw" path="res://art/items/HeartWing3.png" id="4_6tmif"]
+[ext_resource type="Texture2D" uid="uid://b21fvo35k3w3n" path="res://art/items/HeartWing4.png" id="5_dic47"]
+[ext_resource type="Script" path="res://hover.gd" id="7_fnxyk"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e77hm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lra84"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_p2od0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gveho")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6tmif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dic47")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="HeartSmallWinged" type="Node2D"]
+script = ExtResource("1_tmi25")
+
+[node name="Item" parent="." instance=ExtResource("1_vmfga")]
+key_to_update = "hp"
+initial_impact = Vector2(0, -25)
+initial_impact_variance = Vector2(0, -10)
+
+[node name="Timer" parent="Item" index="1"]
+wait_time = 1.0
+
+[node name="RigidBody2D" parent="Item" index="2"]
+physics_material_override = SubResource("PhysicsMaterial_e77hm")
+gravity_scale = 0.01
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item/RigidBody2D" index="0"]
+sprite_frames = SubResource("SpriteFrames_lra84")
+autoplay = "default"
+
+[node name="CollisionShape2D" parent="Item/RigidBody2D" index="1"]
+position = Vector2(0, 12)
+
+[node name="CollisionShape2D" parent="Item/RigidBody2D/Area2D" index="0"]
+position = Vector2(0, 1)
+
+[node name="Hover" type="Node" parent="." node_paths=PackedStringArray("Sprite")]
+script = ExtResource("7_fnxyk")
+Sprite = NodePath("../Item/RigidBody2D/AnimatedSprite2D")
+
+[editable path="Item"]

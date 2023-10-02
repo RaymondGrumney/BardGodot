@@ -1,0 +1,160 @@
+[gd_scene load_steps=22 format=3 uid="uid://c37qbi86rmjj2"]
+
+[ext_resource type="Texture2D" uid="uid://bh26sbkn14v4m" path="res://art/player/BardRunCycle1.png" id="1_0fow0"]
+[ext_resource type="Script" path="res://player.gd" id="1_1jcln"]
+[ext_resource type="Texture2D" uid="uid://dra423kxr1sil" path="res://art/player/BardRunCycle2.png" id="2_7ftca"]
+[ext_resource type="PackedScene" uid="uid://bvcqwxbcragvw" path="res://sword_attack.tscn" id="2_44egv"]
+[ext_resource type="Texture2D" uid="uid://dqk7k6pmx4vqu" path="res://art/player/BardDucking.png" id="2_vxgqs"]
+[ext_resource type="Texture2D" uid="uid://r78pagxq5dsv" path="res://art/player/BardRunCycle3.png" id="3_sch3a"]
+[ext_resource type="Texture2D" uid="uid://cxqm8fm1gsfnv" path="res://art/player/BardRunCycle4.png" id="4_2jv0h"]
+[ext_resource type="Texture2D" uid="uid://ckclrrmhoeq4y" path="res://art/player/BardRunCycle5.png" id="5_mmsea"]
+[ext_resource type="Texture2D" uid="uid://7prw8r2jq34p" path="res://art/player/BardRunCycle6.png" id="6_svjts"]
+[ext_resource type="Texture2D" uid="uid://df660pi7asoia" path="res://art/player/BardRunCycle7.png" id="7_8ww4v"]
+[ext_resource type="Texture2D" uid="uid://cq4nikqrdcr35" path="res://art/player/BardRunCycle8.png" id="8_c6bvx"]
+[ext_resource type="Texture2D" uid="uid://b6cxmg452n0qs" path="res://art/player/BardRunCycle9.png" id="9_k1ox3"]
+[ext_resource type="Texture2D" uid="uid://bxt32ar58xnk1" path="res://art/player/BardRunCycle10.png" id="10_a2vm8"]
+[ext_resource type="Texture2D" uid="uid://by0uf7omw3lsx" path="res://art/player/BardRunCycle11.png" id="11_0ug1f"]
+[ext_resource type="Texture2D" uid="uid://b20geni43b65q" path="res://art/player/BardRunCycle12.png" id="12_ji03g"]
+[ext_resource type="FontFile" uid="uid://du514yoab50xj" path="res://fonts/prstartk.ttf" id="15_t8lfl"]
+[ext_resource type="Texture2D" uid="uid://cvnq4hqd0apj1" path="res://art/items/CoinBronze.png" id="16_tidxt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ipfg"]
+height = 56.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_udw17"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_tidxt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tbory"]
+load_path = "res://.godot/imported/bard.png-9a3372f25b81f081a77115a78a8a38b9.ctex"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tkgtc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vxgqs")
+}],
+"loop": true,
+"name": &"duck",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("1_0fow0")
+}, {
+"duration": 2.0,
+"texture": ExtResource("2_7ftca")
+}, {
+"duration": 2.0,
+"texture": ExtResource("3_sch3a")
+}, {
+"duration": 2.0,
+"texture": ExtResource("4_2jv0h")
+}, {
+"duration": 2.0,
+"texture": ExtResource("5_mmsea")
+}, {
+"duration": 2.0,
+"texture": ExtResource("6_svjts")
+}, {
+"duration": 2.0,
+"texture": ExtResource("7_8ww4v")
+}, {
+"duration": 2.0,
+"texture": ExtResource("8_c6bvx")
+}, {
+"duration": 2.0,
+"texture": ExtResource("9_k1ox3")
+}, {
+"duration": 2.0,
+"texture": ExtResource("10_a2vm8")
+}, {
+"duration": 2.0,
+"texture": ExtResource("11_0ug1f")
+}, {
+"duration": 2.0,
+"texture": ExtResource("12_ji03g")
+}],
+"loop": true,
+"name": &"run",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_tbory")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 5.0
+}]
+
+[node name="RigidBody2D" type="RigidBody2D" node_paths=PackedStringArray("attack_spawn_point") groups=["is_player", "takes_enemy_damage"]]
+position = Vector2(352, 240)
+collision_mask = 14
+mass = 150.0
+max_contacts_reported = 4
+contact_monitor = true
+lock_rotation = true
+script = ExtResource("1_1jcln")
+speed = 250
+jump_power = 250
+attack = ExtResource("2_44egv")
+attack_spawn_point = NodePath("Marker2D/AttackSpawnPoint")
+countable_inventory = {
+"coins": 0,
+"dryads": 0,
+"hp": {
+"current": 2,
+"max": 3
+},
+"mp": {
+"current": 3,
+"max": 3
+},
+"oreads": 0,
+"sylphs": 0
+}
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_8ipfg")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Coins" type="Label" parent="HUD"]
+offset_left = 623.0
+offset_top = 9.0
+offset_right = 723.0
+offset_bottom = 44.0
+theme_override_fonts/font = ExtResource("15_t8lfl")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD"]
+position = Vector2(603, 24)
+scale = Vector2(2.03595, 2.03595)
+sprite_frames = SubResource("SpriteFrames_udw17")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Marker2D"]
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = SubResource("SpriteFrames_tkgtc")
+animation = &"stand"
+
+[node name="AttackSpawnPoint" type="Node2D" parent="Marker2D"]
+position = Vector2(12, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

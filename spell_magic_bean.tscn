@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnwixmoyiripp"]
+
+[ext_resource type="Texture2D" uid="uid://dvgn6001jq2wa" path="res://art/items/SpellMagicBean.png" id="1_5dkky"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q7g6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5dkky")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SpellMagicBean" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q7g6c")

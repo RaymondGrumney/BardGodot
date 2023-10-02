@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqig61hgic5s2"]
+
+[ext_resource type="Script" path="res://spawn_on_damage.gd" id="1_68cx5"]
+[ext_resource type="Texture2D" uid="uid://bu7trhdcqbs8c" path="res://art/level/ChestSmallBase.png" id="2_3j3lc"]
+[ext_resource type="PackedScene" uid="uid://dbf2h5i3mgu4k" path="res://chest_lock_small.tscn" id="2_sbjol"]
+[ext_resource type="Texture2D" uid="uid://bg7sva6ahn2xw" path="res://art/level/ChestSmallLid.png" id="3_faopg"]
+[ext_resource type="Script" path="res://takes_damage.gd" id="4_j5hdl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xspf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3j3lc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_by5ij"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_faopg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rg1lk"]
+size = Vector2(19, 19)
+
+[node name="ChestSmall" type="Node2D" node_paths=PackedStringArray("object_to_destroy")]
+script = ExtResource("1_68cx5")
+object_to_destroy = NodePath("ChestSmallLid")
+spawn_obect_on_destruction = Array[Dictionary]([{
+ExtResource("2_sbjol"): 1
+}])
+
+[node name="ChestSmallBase" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ChestSmallBase"]
+sprite_frames = SubResource("SpriteFrames_7xspf")
+offset = Vector2(0.5, 0)
+
+[node name="ChestSmallLid" type="Area2D" parent="." groups=["takes_player_damage"]]
+position = Vector2(0, 1)
+collision_layer = 8
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ChestSmallLid"]
+position = Vector2(0, -9)
+sprite_frames = SubResource("SpriteFrames_by5ij")
+offset = Vector2(0.5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChestSmallLid"]
+position = Vector2(0.5, -4.5)
+shape = SubResource("RectangleShape2D_rg1lk")
+
+[node name="TakesDamage" type="Node" parent="ChestSmallLid"]
+script = ExtResource("4_j5hdl")
+
+[connection signal="area_entered" from="ChestSmallLid" to="." method="_on_area_entered"]
+[connection signal="body_entered" from="ChestSmallLid" to="." method="_on_body_entered"]
