@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c37qbi86rmjj2"]
+[gd_scene load_steps=28 format=3 uid="uid://c37qbi86rmjj2"]
 
 [ext_resource type="Texture2D" uid="uid://bh26sbkn14v4m" path="res://art/player/BardRunCycle1.png" id="1_0fow0"]
 [ext_resource type="Script" path="res://player.gd" id="1_1jcln"]
@@ -7,9 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://dqk7k6pmx4vqu" path="res://art/player/BardDucking.png" id="2_vxgqs"]
 [ext_resource type="Texture2D" uid="uid://r78pagxq5dsv" path="res://art/player/BardRunCycle3.png" id="3_sch3a"]
 [ext_resource type="Texture2D" uid="uid://cxqm8fm1gsfnv" path="res://art/player/BardRunCycle4.png" id="4_2jv0h"]
+[ext_resource type="PackedScene" uid="uid://beslsdu43a2wh" path="res://heart_container.tscn" id="5_g1unu"]
 [ext_resource type="Texture2D" uid="uid://ckclrrmhoeq4y" path="res://art/player/BardRunCycle5.png" id="5_mmsea"]
+[ext_resource type="Script" path="res://z_rotate_sprite.gd" id="5_x2ag8"]
+[ext_resource type="PackedScene" uid="uid://qp515gx2hi8u" path="res://note_container.tscn" id="6_k7848"]
 [ext_resource type="Texture2D" uid="uid://7prw8r2jq34p" path="res://art/player/BardRunCycle6.png" id="6_svjts"]
 [ext_resource type="Texture2D" uid="uid://df660pi7asoia" path="res://art/player/BardRunCycle7.png" id="7_8ww4v"]
+[ext_resource type="Texture2D" uid="uid://dvc7wxaduonor" path="res://art/player/InventoryRing.png" id="7_cxei2"]
 [ext_resource type="Texture2D" uid="uid://cq4nikqrdcr35" path="res://art/player/BardRunCycle8.png" id="8_c6bvx"]
 [ext_resource type="Texture2D" uid="uid://b6cxmg452n0qs" path="res://art/player/BardRunCycle9.png" id="9_k1ox3"]
 [ext_resource type="Texture2D" uid="uid://bxt32ar58xnk1" path="res://art/player/BardRunCycle10.png" id="10_a2vm8"]
@@ -17,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://b20geni43b65q" path="res://art/player/BardRunCycle12.png" id="12_ji03g"]
 [ext_resource type="FontFile" uid="uid://du514yoab50xj" path="res://fonts/prstartk.ttf" id="15_t8lfl"]
 [ext_resource type="Texture2D" uid="uid://cvnq4hqd0apj1" path="res://art/items/CoinBronze.png" id="16_tidxt"]
+[ext_resource type="PackedScene" uid="uid://7mjwqgtqy2p6" path="res://takes_damage.tscn" id="18_7q3ga"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ipfg"]
 height = 56.0
@@ -26,6 +31,17 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("16_tidxt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h34dj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_cxei2")
 }],
 "loop": true,
 "name": &"default",
@@ -95,28 +111,30 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="RigidBody2D" type="RigidBody2D" node_paths=PackedStringArray("attack_spawn_point") groups=["is_player", "takes_enemy_damage"]]
-position = Vector2(352, 240)
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("attack_spawn_point_standing", "attack_spawn_point_ducking") groups=["is_player", "player", "takes_enemy_damage"]]
+position = Vector2(359, 236)
 collision_mask = 14
 mass = 150.0
 max_contacts_reported = 4
 contact_monitor = true
 lock_rotation = true
 script = ExtResource("1_1jcln")
-speed = 250
+speed = 200
 jump_power = 250
 attack = ExtResource("2_44egv")
-attack_spawn_point = NodePath("Marker2D/AttackSpawnPoint")
+attack_spawn_point_standing = NodePath("Marker2D/AttackSpawnPointStanding")
+attack_spawn_point_ducking = NodePath("Marker2D/AttackSpawnPointDucking")
+double_jump_enabled = true
 countable_inventory = {
 "coins": 0,
 "dryads": 0,
 "hp": {
-"current": 2,
+"current": 3,
 "max": 3
 },
 "mp": {
-"current": 3,
-"max": 3
+"current": 1,
+"max": 1
 },
 "oreads": 0,
 "sylphs": 0
@@ -141,10 +159,53 @@ theme_override_fonts/font = ExtResource("15_t8lfl")
 theme_override_font_sizes/font_size = 32
 text = "0"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD"]
-position = Vector2(603, 24)
+[node name="Node2D" type="Node2D" parent="HUD/Coins"]
+position = Vector2(-21, 14)
+script = ExtResource("5_x2ag8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/Coins/Node2D"]
+position = Vector2(0, -3.8147e-06)
 scale = Vector2(2.03595, 2.03595)
 sprite_frames = SubResource("SpriteFrames_udw17")
+
+[node name="HeartContainerRow" type="Node2D" parent="HUD"]
+position = Vector2(67, 15)
+
+[node name="HeartContainer1" parent="HUD/HeartContainerRow" instance=ExtResource("5_g1unu")]
+
+[node name="HeartContainer2" parent="HUD/HeartContainerRow" instance=ExtResource("5_g1unu")]
+position = Vector2(24, 0)
+
+[node name="HeartContainer3" parent="HUD/HeartContainerRow" instance=ExtResource("5_g1unu")]
+position = Vector2(48, 0)
+
+[node name="HeartContainer4" parent="HUD/HeartContainerRow" instance=ExtResource("5_g1unu")]
+position = Vector2(72, 0)
+
+[node name="HeartContainer5" parent="HUD/HeartContainerRow" instance=ExtResource("5_g1unu")]
+position = Vector2(96, 0)
+
+[node name="HeartContainer6" parent="HUD/HeartContainerRow" instance=ExtResource("5_g1unu")]
+position = Vector2(120, 0)
+
+[node name="NoteContainerRow" type="Node2D" parent="HUD"]
+position = Vector2(67, 37)
+
+[node name="NoteContainer1" parent="HUD/NoteContainerRow" instance=ExtResource("6_k7848")]
+position = Vector2(5, 0)
+
+[node name="NoteContainer2" parent="HUD/NoteContainerRow" instance=ExtResource("6_k7848")]
+position = Vector2(41, 0)
+
+[node name="NoteContainer3" parent="HUD/NoteContainerRow" instance=ExtResource("6_k7848")]
+position = Vector2(77, 0)
+
+[node name="NoteContainer4" parent="HUD/NoteContainerRow" instance=ExtResource("6_k7848")]
+position = Vector2(114, 0)
+
+[node name="InventoryRing" type="AnimatedSprite2D" parent="HUD"]
+position = Vector2(28, 26)
+sprite_frames = SubResource("SpriteFrames_h34dj")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 
@@ -152,9 +213,16 @@ sprite_frames = SubResource("SpriteFrames_udw17")
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_tkgtc")
-animation = &"stand"
+animation = &"duck"
 
-[node name="AttackSpawnPoint" type="Node2D" parent="Marker2D"]
-position = Vector2(12, 0)
+[node name="AttackSpawnPointStanding" type="Marker2D" parent="Marker2D"]
+position = Vector2(10, 0)
+
+[node name="AttackSpawnPointDucking" type="Marker2D" parent="Marker2D"]
+position = Vector2(14, 20)
+
+[node name="TakesDamage" parent="." groups=["player"] instance=ExtResource("18_7q3ga")]
+health = 3.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="damaged" from="TakesDamage" to="." method="_on_takes_damage_damaged"]

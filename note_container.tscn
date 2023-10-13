@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://qp515gx2hi8u"]
+
+[ext_resource type="Texture2D" uid="uid://bh87nn834jf6j" path="res://art/player/NoteLargEmpty.png" id="1_xyxmy"]
+[ext_resource type="Texture2D" uid="uid://bntjbqi6tkusx" path="res://art/player/NoteLargFull.png" id="2_8foqt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jalgy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xyxmy")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8foqt")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}]
+
+[node name="NoteContainer1" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_jalgy")
+animation = &"full"

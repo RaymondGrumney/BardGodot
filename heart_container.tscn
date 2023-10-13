@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://beslsdu43a2wh"]
+
+[ext_resource type="Texture2D" uid="uid://bmupi5qah4rv1" path="res://art/player/HeartLargeEmpty.png" id="1_d00uu"]
+[ext_resource type="Texture2D" uid="uid://cbkpvgbjahn8w" path="res://art/player/HeartLarge.png" id="2_4tim1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jalgy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_d00uu")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4tim1")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}]
+
+[node name="HeartContainer" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_jalgy")
+animation = &"full"
