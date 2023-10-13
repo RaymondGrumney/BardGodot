@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://breuchjlxtobi"]
+[gd_scene load_steps=5 format=3 uid="uid://breuchjlxtobi"]
 
 [ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_4ha6k"]
 [ext_resource type="Texture2D" uid="uid://btjjvg4pwjgoj" path="res://art/items/CoinGold.png" id="2_1ghe7"]
+[ext_resource type="Script" path="res://z_rotate_sprite.gd" id="2_dm4jd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lra84"]
 animations = [{
@@ -19,7 +20,10 @@ animations = [{
 [node name="Item" parent="." instance=ExtResource("1_4ha6k")]
 value = 25
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item/RigidBody2D" index="0"]
+[node name="Node2D" type="Node2D" parent="Item/RigidBody2D" index="0"]
+script = ExtResource("2_dm4jd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Item/RigidBody2D/Node2D"]
 sprite_frames = SubResource("SpriteFrames_lra84")
 
 [editable path="Item"]
