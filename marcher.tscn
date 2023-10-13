@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://lh5o1nroaede"]
+
+[ext_resource type="Script" path="res://marcher.gd" id="1_eema5"]
+[ext_resource type="PackedScene" uid="uid://7mjwqgtqy2p6" path="res://takes_damage.tscn" id="2_3y3yd"]
+[ext_resource type="PackedScene" uid="uid://j7phcp42nnfr" path="res://despawn_on_signal.tscn" id="3_vbrus"]
+[ext_resource type="Script" path="res://knockback_on_signal.gd" id="4_sy6b0"]
+[ext_resource type="PackedScene" uid="uid://040m3062fi83" path="res://deals_damage.tscn" id="5_be61l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_es0ll"]
+radius = 12.0
+height = 48.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uqk3h"]
+radius = 12.0
+height = 48.0
+
+[node name="Marcher" type="Node2D" groups=["enemy"]]
+script = ExtResource("1_eema5")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." groups=["damages_player", "enemy"]]
+collision_layer = 8
+collision_mask = 3
+lock_rotation = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CapsuleShape2D_es0ll")
+
+[node name="DealsDamage" parent="RigidBody2D" instance=ExtResource("5_be61l")]
+group_damaged = "player"
+damage_dealt = 1.0
+
+[node name="CollisionShape2D" parent="RigidBody2D/DealsDamage" index="0"]
+shape = SubResource("CapsuleShape2D_uqk3h")
+debug_color = Color(0.960784, 0, 0.517647, 0.419608)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="TakesDamage" parent="." groups=["enemy"] instance=ExtResource("2_3y3yd")]
+
+[node name="DespawnOnSignal" parent="." instance=ExtResource("3_vbrus")]
+
+[node name="KnockbackOnSignal" type="Node" parent="."]
+script = ExtResource("4_sy6b0")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="damaged" from="TakesDamage" to="KnockbackOnSignal" method="_knockback"]
+[connection signal="lethal_damage" from="TakesDamage" to="DespawnOnSignal" method="despawn"]
+[connection signal="stun" from="KnockbackOnSignal" to="." method="stunned"]
+
+[editable path="RigidBody2D/DealsDamage"]
