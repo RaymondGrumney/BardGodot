@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="1_4k7c8"]
 [ext_resource type="Texture2D" uid="uid://dx411xgi1onub" path="res://art/items/Oread.png" id="2_gtxgh"]
-[ext_resource type="Script" path="res://hover.gd" id="3_1oxcy"]
+[ext_resource type="PackedScene" uid="uid://dn6ocq4ohqfrw" path="res://hover.tscn" id="3_3tv4s"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0m6dv"]
 animations = [{
@@ -33,8 +33,7 @@ disabled = true
 position = Vector2(-1, 2)
 sprite_frames = SubResource("SpriteFrames_0m6dv")
 
-[node name="Hover" type="Node" parent="." node_paths=PackedStringArray("Sprite")]
-script = ExtResource("3_1oxcy")
+[node name="Hover" parent="." node_paths=PackedStringArray("Sprite") instance=ExtResource("3_3tv4s")]
 Sprite = NodePath("../Item/AnimatedSprite2D")
 
 [editable path="Item"]
