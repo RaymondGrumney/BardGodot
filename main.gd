@@ -5,19 +5,14 @@ var score
 
 
 func _ready():
-	print("_ready")
 	new_game()
 
 
 func game_over():
-	print("game_over")
-	$ScoreTimer.stop()
-	$MobTimer.stop()
+	pass
 
 
 func new_game():
-	print("New Game")
-	score = 0
 	$Player.start($PlayerStartingPosition.position)
 
 
