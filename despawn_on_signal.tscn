@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://j7phcp42nnfr"]
+
+[ext_resource type="Script" path="res://despawn_on_signal.gd" id="1_j4m4b"]
+
+[node name="DespawnOnSignal" type="Node"]
+script = ExtResource("1_j4m4b")
