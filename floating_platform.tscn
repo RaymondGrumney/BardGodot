@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://daftxqf0iy5ps"]
+
+[ext_resource type="Script" path="res://floating_platform.gd" id="1_egesm"]
+[ext_resource type="TileSet" uid="uid://ohr8ir1ptwgi" path="res://main.tres" id="2_0r7yh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8rbkj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s33o8"]
+size = Vector2(60, 24)
+
+[node name="FloatingPlatform1" type="Node2D"]
+script = ExtResource("1_egesm")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-1, 0)
+collision_layer = 2
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_8rbkj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(33, 12)
+shape = SubResource("RectangleShape2D_s33o8")
+
+[node name="TileMap" type="TileMap" parent="StaticBody2D"]
+position = Vector2(1, 0)
+tile_set = ExtResource("2_0r7yh")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 393216, 3, 1, 458752, 3, 65536, 393216, 4, 65537, 458752, 4, 2, 524288, 3, 65538, 524288, 4, 3, 589824, 3, 65539, 589824, 4)
