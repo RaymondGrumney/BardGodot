@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bqig61hgic5s2"]
 
-[ext_resource type="Script" path="res://spawn_on_damage.gd" id="1_68cx5"]
+[ext_resource type="Script" path="res://spawn_on_signal.gd" id="1_68cx5"]
 [ext_resource type="Texture2D" uid="uid://bu7trhdcqbs8c" path="res://art/level/ChestSmallBase.png" id="2_3j3lc"]
 [ext_resource type="PackedScene" uid="uid://dbf2h5i3mgu4k" path="res://chest_lock_small.tscn" id="2_sbjol"]
 [ext_resource type="Texture2D" uid="uid://bg7sva6ahn2xw" path="res://art/level/ChestSmallLid.png" id="3_faopg"]

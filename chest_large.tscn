@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://byr1xmvlsitxq"]
 
-[ext_resource type="Script" path="res://spawn_on_damage.gd" id="1_j38st"]
+[ext_resource type="Script" path="res://spawn_on_signal.gd" id="1_j38st"]
 [ext_resource type="PackedScene" uid="uid://ccvom53kp48i1" path="res://chest_lock_large.tscn" id="2_i44gb"]
 [ext_resource type="Texture2D" uid="uid://c0pganjlwrn17" path="res://art/level/ChestLargeBase.png" id="3_68njx"]
 [ext_resource type="Script" path="res://takes_damage.gd" id="4_6ukql"]
