@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7mjwqgtqy2p6"]
+
+[ext_resource type="Script" path="res://takes_damage.gd" id="1_ht3x4"]
+
+[node name="TakesDamage" type="Node" groups=["takes_player_damage"]]
+script = ExtResource("1_ht3x4")

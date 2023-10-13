@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvcqwxbcragvw"]
+[gd_scene load_steps=6 format=3 uid="uid://bvcqwxbcragvw"]
 
-[ext_resource type="Script" path="res://sword_attack.gd" id="1_a7sd1"]
 [ext_resource type="Texture2D" uid="uid://cvm56x520qfea" path="res://art/player/Sword.png" id="1_smi2k"]
+[ext_resource type="PackedScene" uid="uid://040m3062fi83" path="res://deals_damage.tscn" id="3_s2uif"]
+[ext_resource type="PackedScene" uid="uid://cfifh6p5rq7mj" path="res://despawn_on_timer.tscn" id="4_t1oa6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_075sy"]
 size = Vector2(27, 16)
@@ -17,14 +18,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="sword_attack" type="Node2D" groups=["deals_enemy_damage"]]
-script = ExtResource("1_a7sd1")
+[node name="sword_attack" type="Node2D"]
 
-[node name="Area2D" type="Area2D" parent="." groups=["damages_enemies"]]
-collision_mask = 8
-input_pickable = false
+[node name="DealsDamage" parent="." instance=ExtResource("3_s2uif")]
+groups_damaged = Array[String](["enemy", "breakable"])
+damage_dealt = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" parent="DealsDamage" index="0"]
 position = Vector2(13.5, 0)
 shape = SubResource("RectangleShape2D_075sy")
 
@@ -33,10 +33,7 @@ position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_eiix2")
 centered = false
 
-[node name="Timer" type="Timer" parent="."]
+[node name="DespawnOnTimer" parent="." instance=ExtResource("4_t1oa6")]
 wait_time = 0.1
-one_shot = true
-autostart = true
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[editable path="DealsDamage"]

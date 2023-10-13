@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d38q1u2ug60xw"]
+[gd_scene load_steps=8 format=3 uid="uid://d38q1u2ug60xw"]
 
 [ext_resource type="Script" path="res://spawn_on_damage.gd" id="1_m6048"]
 [ext_resource type="Texture2D" uid="uid://br2x06o358i4y" path="res://art/level/AmphoraTan.png" id="2_5m0na"]
 [ext_resource type="PackedScene" uid="uid://vuk481f7q674" path="res://heart_small.tscn" id="2_ttao3"]
+[ext_resource type="PackedScene" uid="uid://7mjwqgtqy2p6" path="res://takes_damage.tscn" id="4_lh1e3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wvbqn"]
 friction = 0.3
@@ -38,7 +39,7 @@ physics_material_override = SubResource("PhysicsMaterial_wvbqn")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 shape = SubResource("CapsuleShape2D_8kn8s")
 
-[node name="Area2D" type="Area2D" parent="RigidBody2D"]
+[node name="Area2D" type="Area2D" parent="RigidBody2D" groups=["breakable"]]
 collision_layer = 8
 collision_mask = 3
 gravity_space_override = 1
@@ -46,7 +47,12 @@ gravity_space_override = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/Area2D"]
 shape = SubResource("CapsuleShape2D_8kn8s")
 
+[node name="TakesDamage" parent="RigidBody2D/Area2D" groups=["breakable"] instance=ExtResource("4_lh1e3")]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D"]
 sprite_frames = SubResource("SpriteFrames_33a57")
 
 [connection signal="area_entered" from="RigidBody2D/Area2D" to="." method="_on_body_entered"]
+[connection signal="lethal_damage" from="RigidBody2D/Area2D/TakesDamage" to="." method="_take_damage"]
+
+[editable path="RigidBody2D/Area2D/TakesDamage"]

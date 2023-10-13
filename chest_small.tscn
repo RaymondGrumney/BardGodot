@@ -47,7 +47,7 @@ monitoring = false
 sprite_frames = SubResource("SpriteFrames_7xspf")
 offset = Vector2(0.5, 0)
 
-[node name="ChestSmallLid" type="Area2D" parent="." groups=["takes_player_damage"]]
+[node name="ChestSmallLid" type="Area2D" parent="." groups=["breakable", "takes_player_damage"]]
 position = Vector2(0, 1)
 collision_layer = 8
 
@@ -65,3 +65,4 @@ script = ExtResource("4_j5hdl")
 
 [connection signal="area_entered" from="ChestSmallLid" to="." method="_on_area_entered"]
 [connection signal="body_entered" from="ChestSmallLid" to="." method="_on_body_entered"]
+[connection signal="lethal_damage" from="ChestSmallLid/TakesDamage" to="." method="_take_damage"]

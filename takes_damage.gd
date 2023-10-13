@@ -1,10 +1,14 @@
 extends Node
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@export var health:float = 1
+signal lethal_damage
+signal damaged
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func damage( damage:float, collision = null):
+	print( get_parent().name, ": ",  damage)
+	health -= damage
+	damaged.emit(collision)
+	if health <= 0:
+		print("lethal")
+		lethal_damage.emit(collision)

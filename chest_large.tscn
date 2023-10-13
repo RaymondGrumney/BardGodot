@@ -40,7 +40,7 @@ object_to_destroy = NodePath("ChestLargeLid")
 spawn_obect_on_destruction = Array[Dictionary]([{
 ExtResource("2_i44gb"): 1
 }])
-spawn_area = NodePath("ChestLargeLid/SpawnArea")
+spawn_area = NodePath("SpawnArea")
 
 [node name="ChestLargeBase" type="Area2D" parent="."]
 position = Vector2(0, -13)
@@ -52,7 +52,7 @@ monitoring = false
 sprite_frames = SubResource("SpriteFrames_7xspf")
 offset = Vector2(0, 0.5)
 
-[node name="ChestLargeLid" type="Area2D" parent="." groups=["takes_player_damage"]]
+[node name="ChestLargeLid" type="Area2D" parent="." groups=["breakable", "takes_player_damage"]]
 position = Vector2(0, -12)
 collision_layer = 8
 
@@ -68,10 +68,11 @@ shape = SubResource("RectangleShape2D_rg1lk")
 [node name="TakesDamage" type="Node" parent="ChestLargeLid"]
 script = ExtResource("4_6ukql")
 
-[node name="SpawnArea" type="CollisionShape2D" parent="ChestLargeLid"]
-position = Vector2(0, -19.5)
+[node name="SpawnArea" type="CollisionShape2D" parent="."]
+position = Vector2(0, -31.5)
 shape = SubResource("RectangleShape2D_gkc7q")
 disabled = true
 
 [connection signal="area_entered" from="ChestLargeLid" to="." method="_on_area_entered"]
 [connection signal="body_entered" from="ChestLargeLid" to="." method="_on_body_entered"]
+[connection signal="lethal_damage" from="ChestLargeLid/TakesDamage" to="." method="_take_damage"]
