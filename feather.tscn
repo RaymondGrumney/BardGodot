@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://b04lhxksj3mq0"]
+
+[ext_resource type="Script" path="res://feather.gd" id="1_qlvy4"]
+[ext_resource type="PackedScene" uid="uid://bclgu824vnbcs" path="res://item.tscn" id="2_0ac87"]
+[ext_resource type="PackedScene" uid="uid://qbscq148h8tl" path="res://inventory_feather.tscn" id="3_8f10j"]
+[ext_resource type="Texture2D" uid="uid://doxrexw6set36" path="res://art/items/Feather.png" id="3_mnd15"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_copr8"]
+rough = true
+absorbent = true
+
+[node name="Feather" type="Node2D"]
+script = ExtResource("1_qlvy4")
+
+[node name="Item" parent="." instance=ExtResource("2_0ac87")]
+value = 0
+initial_impact = Vector2(0, -30)
+initial_impact_variance = Vector2(5, -10)
+
+[node name="Collectible" parent="Item" index="0"]
+collectible = ExtResource("3_8f10j")
+
+[node name="RigidBody2D" parent="Item" index="2"]
+physics_material_override = SubResource("PhysicsMaterial_copr8")
+gravity_scale = 0.01
+
+[node name="Sprite" type="Sprite2D" parent="Item/RigidBody2D" index="0"]
+texture = ExtResource("3_mnd15")
+
+[editable path="Item"]
